@@ -34,7 +34,10 @@ export class Dashboardv3Component  {
     ];
   
     public nodeDefaults(node: NodeModel): NodeModel {
+     
       let obj: NodeModel = {};
+      
+ 
       if (obj.width === undefined) {
         obj.width = 145;
       } else {
@@ -48,6 +51,10 @@ export class Dashboardv3Component  {
       return obj;
     }
     public connDefaults(obj: Connector): void {
+      console.log("this is connDefaults "+obj.id)
+      console.log("this is connDefaults "+obj.sourcePortID)
+      console.log("this is connDefaults "+obj.targetPortID)
+      
       if (obj.id.indexOf('connector') !== -1) {
         obj.type = 'Orthogonal';
         obj.targetDecorator = { shape: 'Arrow', width: 10, height: 10 };
@@ -67,6 +74,7 @@ export class Dashboardv3Component  {
     };
   
     public dragEnter(args: IDragEnterEventArgs): void {
+      console.log("this is dragEnter "+args.source.valueOf)
       let obj: NodeModel = args.element as NodeModel;
       if (obj && obj.width && obj.height) {
         let oWidth: number = obj.width;
@@ -85,62 +93,12 @@ export class Dashboardv3Component  {
     public expandMode: ExpandMode = 'Multiple';
     //Initialize the flowshapes for the symbol palatte
     private flowshapes: NodeModel[] = [
-      { id: 'Terminator', shape: { type: 'Flow', shape: 'Terminator' } },
-      { id: 'Process', shape: { type: 'Flow', shape: 'Process' } },
-      { id: 'Decision', shape: { type: 'Flow', shape: 'Decision' } },
-      { id: 'Document', shape: { type: 'Flow', shape: 'Document' } },
-      { id: 'PreDefinedProcess', shape: { type: 'Flow', shape: 'PreDefinedProcess' } },
-      { id: 'PaperTap', shape: { type: 'Flow', shape: 'PaperTap' } },
-      { id: 'DirectData', shape: { type: 'Flow', shape: 'DirectData' } },
-      { id: 'SequentialData', shape: { type: 'Flow', shape: 'SequentialData' } },
-      { id: 'Sort', shape: { type: 'Flow', shape: 'Sort' } },
-      { id: 'MultiDocument', shape: { type: 'Flow', shape: 'MultiDocument' } },
-      { id: 'Collate', shape: { type: 'Flow', shape: 'Collate' } },
-      { id: 'SummingJunction', shape: { type: 'Flow', shape: 'SummingJunction' } },
-      { id: 'Or', shape: { type: 'Flow', shape: 'Or' } },
-      {
-        id: 'InternalStorage',
-        shape: { type: 'Flow', shape: 'InternalStorage' }
-      },
-      { id: 'Extract', shape: { type: 'Flow', shape: 'Extract' } },
-      {
-        id: 'ManualOperation',
-        shape: { type: 'Flow', shape: 'ManualOperation' }
-      },
-      { id: 'Merge', shape: { type: 'Flow', shape: 'Merge' } },
-      {
-        id: 'OffPageReference',
-        shape: { type: 'Flow', shape: 'OffPageReference' }
-      },
-      {
-        id: 'SequentialAccessStorage',
-        shape: { type: 'Flow', shape: 'SequentialAccessStorage' }
-      },
-      { id: 'Annotation', shape: { type: 'Flow', shape: 'Annotation' } },
-      { id: 'Annotation2', shape: { type: 'Flow', shape: 'Annotation2' } },
-      { id: 'Data', shape: { type: 'Flow', shape: 'Data' } },
-      { id: 'Card', shape: { type: 'Flow', shape: 'Card' } },
-      { id: 'Delay', shape: { type: 'Flow', shape: 'Delay' } }
+      { id: 'Card', shape: { type: 'Flow', shape: 'Card' } }
     ];
   
     //Initializes connector symbols for the symbol palette
     private connectorSymbols: ConnectorModel[] = [
-      {
-        id: 'Link1',
-        type: 'Orthogonal',
-        sourcePoint: { x: 0, y: 0 },
-        targetPoint: { x: 60, y: 60 },
-        targetDecorator: { shape: 'Arrow', style: {strokeColor: '#757575', fill: '#757575'} },
-        style: { strokeWidth: 1, strokeColor: '#757575' }
-      },
-      {
-        id: 'link3',
-        type: 'Orthogonal',
-        sourcePoint: { x: 0, y: 0 },
-        targetPoint: { x: 60, y: 60 },
-        style: { strokeWidth: 1, strokeColor: '#757575' },
-        targetDecorator: { shape: 'None' }
-      },
+     
       {
         id: 'Link21',
         type: 'Straight',
@@ -149,22 +107,7 @@ export class Dashboardv3Component  {
         targetDecorator: { shape: 'Arrow', style: {strokeColor: '#757575', fill: '#757575'} },
         style: { strokeWidth: 1, strokeColor: '#757575' }
       },
-      {
-        id: 'link23',
-        type: 'Straight',
-        sourcePoint: { x: 0, y: 0 },
-        targetPoint: { x: 60, y: 60 },
-        style: { strokeWidth: 1, strokeColor: '#757575' },
-        targetDecorator: { shape: 'None' }
-      },
-      {
-        id: 'link33',
-        type: 'Bezier',
-        sourcePoint: { x: 0, y: 0 },
-        targetPoint: { x: 60, y: 60 },
-        style: { strokeWidth: 1, strokeColor: '#757575' },
-        targetDecorator: { shape: 'None' }
-      }
+     
     ];
   
     public palettes: PaletteModel[] = [
@@ -185,10 +128,12 @@ export class Dashboardv3Component  {
     ];
   
     public getSymbolInfo(symbol: NodeModel): SymbolInfo {
+      console.log("this is getSymbolInfo "+symbol)
       return { fit: true };
     }
   
     public getSymbolDefaults(symbol: NodeModel): void {
+      console.log("this is getSymbolDefaults "+symbol)
       symbol.style.strokeColor = '#757575';
       if (symbol.id === 'Terminator' || symbol.id === 'Process') {
         symbol.width = 80;
@@ -213,11 +158,13 @@ export class Dashboardv3Component  {
     
   
     public diagramCreate(args: Object): void {
+      console.log("this is diagramCreate "+args)
       paletteIconClick();
     }
   }
   
   function getPorts(obj: NodeModel): PointPortModel[] {
+    console.log("this is getPorts "+obj.id)
     let ports: PointPortModel[] = [
       { id: 'port1', shape: 'Circle', offset: { x: 0, y: 0.5 } },
       { id: 'port2', shape: 'Circle', offset: { x: 0.5, y: 1 } },
