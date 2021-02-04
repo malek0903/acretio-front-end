@@ -8,21 +8,51 @@
 
 <div class="row">
     <script src="script/diagram-common.ts"></script>
-    
-     
-        <div class="col col-md-2">
-            <button class="btn btn-primary"> ajouter </button>
-            <ejs-symbolpalette id="symbolpalette" [expandMode]='expandMode' [palettes]='palettes' width="100%"
-                height="200px" [symbolHeight]=60 [symbolWidth]=60 [symbolMargin]='symbolMargin'
-                [getSymbolInfo]='getSymbolInfo' [getNodeDefaults]='getSymbolDefaults'>
-            </ejs-symbolpalette>
+
+
+    <div class="col col-md-2">
+        <button class="btn btn-primary"> ajouter </button>
+        <ejs-symbolpalette id="symbolpalette" [expandMode]='expandMode' [palettes]='palettes' width="100%"
+            height="300px" [symbolHeight]=60 [symbolWidth]=60 [symbolMargin]='symbolMargin'
+            [getSymbolInfo]='getSymbolInfo' [getNodeDefaults]='getSymbolDefaults'>
+        </ejs-symbolpalette>
+    </div>
+    <div class="col col-md-10">
+        <div>
+            <ejs-diagram #diagram id="diagram" width="100%" height="700px" [snapSettings]='snapSettings'
+                [getConnectorDefaults]='connDefaults' [getNodeDefaults]='nodeDefaults' dragEnter='dragEnter'
+                (created)="diagramCreate($event)" (collectionChange)="collectionChange($event)"
+                (connectionChange)="connectionChange($event)">
+                <!-- ***********************************************************************-->
+                <e-nodes>
+                    <e-node id='NewIdea' [height]=60 [offsetX]=300 [offsetY]=80 [shape]='terminator'>
+                        <e-node-annotations>
+                            <e-node-annotation content='Place Order'>
+                            </e-node-annotation>
+                        </e-node-annotations>
+                    </e-node>
+                    <e-node id='Meeting' [height]=60 [offsetX]=300 [offsetY]=160 [shape]='process'>
+                        <e-node-annotations>
+                            <e-node-annotation content='Start Transaction'>
+                            </e-node-annotation>
+                        </e-node-annotations>
+                    </e-node>
+                    <e-node id='BoardDecision' [height]=60 [offsetX]=300 [offsetY]=240 [shape]='process'>
+                        <e-node-annotations>
+                            <e-node-annotation content='Verification'>
+                            </e-node-annotation>
+                        </e-node-annotations>
+                    </e-node>
+                 
+                </e-nodes>
+                <e-connectors>
+                    <e-connector id='connector1' sourceID='NewIdea' targetID='Meeting'>
+                    </e-connector>
+                    <e-connector id='connector2' sourceID='Meeting' targetID='BoardDecision'>
+                    </e-connector>
+                   </e-connectors>
+                <!--************************************************************************************-->
+            </ejs-diagram>
         </div>
-        <div class="col col-md-10">
-            <div>
-                <ejs-diagram #diagram id="diagram" width="100%" height="700px" [snapSettings]='snapSettings'
-                    (created)="created()" [getConnectorDefaults]='connDefaults' [getNodeDefaults]='nodeDefaults'
-                    (dragEnter)="dragEnter($event)" (created)="diagramCreate($event)">
-                </ejs-diagram>
-            </div>
-        </div>
+    </div>
 </div>
